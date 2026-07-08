@@ -37,6 +37,22 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12 mt-3">
+                                <label>Assign to Subcategories (Property Types)</label>
+                                <div class="row">
+                                    @foreach($subcategoriesList as $idx => $subcat)
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="subcategories[]" value="{{ $subcat }}" id="subcat_{{ $idx }}">
+                                            <label class="form-check-label" for="subcat_{{ $idx }}">
+                                                {{ $subcat }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
                             <!-- <div class="col-md-12 mt-3">
                                 <label>Description</label>
                                 <textarea name="description" class="form-control"></textarea>

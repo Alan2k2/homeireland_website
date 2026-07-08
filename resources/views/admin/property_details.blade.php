@@ -1420,79 +1420,32 @@ if( Session::get('main_cat')!=4 && Session::get('main_cat')!=7)
                             <!---->
                             <!--serviced oofice j3-->
                              @if(session::get('main_cat')==6 ||session::get('main_cat')==3)
-                             <div class="row" id="serviced_office">
+                             <div class="row" id="facilities_section">
                                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4">
                                         <h4 class="mt-2">   Facilities</h4>
                                        <div style="display:flex;margin-top:15px">
-                                         <?php
-                                       
-                                         $facilities=$property->facilities;
-                                     if(!empty($facilities)){      
-            if(in_array("None",$facilities))
-    {
-        $a="checked";
-    }
-    if(in_array("Alarm",$facilities))
-    {
-        $b="checked";
-    }
-    if(in_array("Parking",$facilities))
-    {
-        $c="checked";
-    }
-    if(in_array("Meeting Rooms",$facilities))
-    {
-        $d="checked";
-    }
-    if(in_array("Reception",$facilities))
-    {
-        $e="checked";
-    }
-    if(in_array("Toilets",$facilities))
-    {
-        $f="checked";
-    }
-    if(in_array("Phone lines",$facilities))
-    {
-        $g="checked";
-    }
-    if(in_array("Kitchen Area",$facilities))
-    {
-        $h="checked";
-    }if(in_array("Cat 6 Data Cabling",$facilities))
-    {
-        $i="checked";
-    }
-    if(in_array("Cat 5 Cabling",$facilities))
-    {
-        $j="checked";
-    }
-                                     }
-                                         ?>
-                                              <input type="checkbox"name="fa1[]" class="larger "placeholder="€" id="auction"value="None" <?=$a?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2" >   None </h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               <input type="checkbox"name="fa1[]" class="larger "placeholder="€" id="auction" value="Alarm" <?=$b?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2" >   Alarm</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Parking" <?=$c?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Parking</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Meeting Rooms" <?=$d?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Meeting Rooms</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Reception" <?=$e?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Reception</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Toilets" <?=$f?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Toilets</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Phone lines" <?=$g?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Phone lines</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Kitchen Area" <?=$h?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Kitchen Area</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Cat 6 Data Cabling" <?=$i?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Cat 6 Data Cabling</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Cat 5 Cabling" <?=$j?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">  Cat 5 Cabling</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               
-                                               </div>
+                                        <?php
+                                        $facilities = $property->facilities;
+                                        if(!empty($facilities)) {      
+                                            if(!is_array($facilities)) {
+                                                $facilities = explode(',', $facilities);
+                                            }
+                                        } else {
+                                            $facilities = [];
+                                        }
+
+                                        $mainCatId = session::get('main_cat');
+                                        $allFacilities = \App\Models\Facility::all()->filter(function($f) use ($mainCatId) {
+                                            $cats = explode(',', $f->category_ids);
+                                            return in_array($mainCatId, $cats);
+                                        });
+                                        ?>
+                                        @foreach($allFacilities as $fac)
+                                        <div class="form-check me-3 mb-3 dynamic-facility" data-subcategories="{{ $fac->subcategories }}">
+                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_admin1_{{ $fac->id }}" value="{{ $fac->name }}" {{ in_array($fac->name, $facilities) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="facility_admin1_{{ $fac->id }}">{{ $fac->name }}</label>
+                                        </div>
+                                        @endforeach
                                  </div>
                             </div>
                              <!--serviced oofice end-->
@@ -1685,58 +1638,32 @@ if( Session::get('main_cat')!=4 && Session::get('main_cat')!=7)
                                    
                                </div> </div><br><br>
                                 @if(session::get('main_cat')==4||session::get('main_cat')==7)
-                            <div class="row" id="serviced_office">
+                            <div class="row" id="facilities_section">
                                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4">
                                         <h4 class="mt-2">   Facilities</h4>
                                        <div style="display:flex;margin-top:15px">
                                          <?php
-                                    //   j5
-                                         $a=$b=$c=$d=$e=$f=$g=$h=$i=$j=$k="";
-                                         $facilities=$property->facilities;
-                                     if(!empty($facilities)){      
-            if(in_array("Garage",$facilities))
-    {
-        $a="checked";
-    }
-    if(in_array("Bus",$facilities))
-    {
-        $b="checked";
-    }
-    if(in_array("Train",$facilities))
-    {
-        $c="checked";
-    }
-    if(in_array("Meeting Rooms",$facilities))
-    {
-        $d="checked";
-    }
-    if(in_array("Shopping",$facilities))
-    {
-        $e="checked";
-    }
-    if(in_array("Toilets",$facilities))
-    {
-        $f="checked";
-    }
-   
-                                     }
-                                         ?>
-                                              <input type="checkbox"name="fa1[]" class="larger "placeholder="€" id="auction"value="Garage" <?=$a?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2" >   Garage </h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               <input type="checkbox"name="fa1[]" class="larger "placeholder="€" id="auction" value="Bus" <?=$b?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2" >   Bus</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Train" <?=$c?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Train</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Meeting Rooms" <?=$d?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Meeting Rooms</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Shopping" <?=$e?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Shopping</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" name="fa1[]" class="larger "placeholder="€" id="auction"value="Toilets" <?=$f?>> &nbsp;
-                                               &nbsp;&nbsp;<h6 class="mt-2">   Toilets</h6>&nbsp;&nbsp;&nbsp;&nbsp;
-                                               
-                                               
-                                               
+                                        $facilities = $property->facilities;
+                                        if(!empty($facilities)) {      
+                                            if(!is_array($facilities)) {
+                                                $facilities = explode(',', $facilities);
+                                            }
+                                        } else {
+                                            $facilities = [];
+                                        }
+
+                                        $mainCatId = session::get('main_cat');
+                                        $allFacilities = \App\Models\Facility::all()->filter(function($f) use ($mainCatId) {
+                                            $cats = explode(',', $f->category_ids);
+                                            return in_array($mainCatId, $cats);
+                                        });
+                                        ?>
+                                        @foreach($allFacilities as $fac)
+                                        <div class="form-check me-3 mb-3 dynamic-facility" data-subcategories="{{ $fac->subcategories }}">
+                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_admin2_{{ $fac->id }}" value="{{ $fac->name }}" {{ in_array($fac->name, $facilities) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="facility_admin2_{{ $fac->id }}">{{ $fac->name }}</label>
+                                        </div>
+                                        @endforeach
                                                </div>
                                  </div>
                             </div>
@@ -1870,8 +1797,11 @@ if( Session::get('main_cat')!=4 && Session::get('main_cat')!=7)
 
  $Alarm=$Smoker=$PetsAllowed=$StepFreeAccess=$WalkInShower= $WheelchairAccess=$HalfFurnished=$FullFurnished=$Dishwasher=$FirstLetting=$Garage=$NoFurniture=$BillsIncluded=$StudentAccommodation=$SeaViews= $Gym=$Balcony=$Patio=$Garden=$Broadband=$Microwave=$CentralHeating=$CableTelevision=$HeatedFlooring=$Dryer=$parking_select=$WashingMachine=$En_suite_check=$No_Pets=$TennisCourt=$SwimmingPool=$GamesRoom=$NoPets="";
  if($property->facilities)
-{
+ {
     $facilities=($property->facilities);
+    if(!is_array($facilities)) {
+        $facilities = explode(',', $facilities);
+    }
     
  if(in_array("Step Free Access",$facilities))
     {
@@ -2615,6 +2545,41 @@ function remove(el) {
 });
 
 
+</script>
+<script>
+    $(document).ready(function() {
+        function filterAdminFacilities() {
+            var property_select = $("select[name='property_type']").val();
+            if (!property_select) return;
+
+            var anyVisible = false;
+            $(".dynamic-facility").each(function() {
+                var subcatsStr = $(this).attr("data-subcategories");
+                if (!subcatsStr) {
+                    // If no subcategories assigned, assume it applies to all in this category
+                    $(this).show();
+                    anyVisible = true;
+                } else {
+                    var subcats = subcatsStr.split(",");
+                    if (subcats.indexOf(property_select) !== -1) {
+                        $(this).show();
+                        anyVisible = true;
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
+
+            if (anyVisible) {
+                $("#facilities_section").show();
+            } else {
+                $("#facilities_section").hide();
+            }
+        }
+
+        $("select[name='property_type']").on('change', filterAdminFacilities);
+        filterAdminFacilities(); // Run on load
+    });
 </script>
 </div>
 </section>    

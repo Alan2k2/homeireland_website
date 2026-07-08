@@ -21,4 +21,7 @@ yarn-error.log
 .env.example
 .user.ini
 download
+_public_html.zip
+testing.zip
+/public/uploads
 

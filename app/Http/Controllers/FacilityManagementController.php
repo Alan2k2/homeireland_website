@@ -17,7 +17,13 @@ class FacilityManagementController extends Controller
     public function create()
     {
         $mainCategories = \Illuminate\Support\Facades\DB::table('main_category')->get();
-        return view('admin.facility-management.create', compact('mainCategories'));
+        $subcategoriesList = [
+            'Agricultural Land', 'Commercial Site', 'Development Land', 'Industrial Site', 
+            'Industrial Unit', 'Investment Property', 'Office Share', 'Office Space', 
+            'Restaurant / Bar / Hotel', 'Retail Unit', 'Serviced Office',
+            'House', 'Apartment', 'Studio', 'Flat'
+        ];
+        return view('admin.facility-management.create', compact('mainCategories', 'subcategoriesList'));
     }
 
     public function store(Request $request)
@@ -30,6 +36,7 @@ class FacilityManagementController extends Controller
         Facility::create([
             'name' => $request->name,
             'category_ids' => implode(',', $request->category_ids),
+            'subcategories' => $request->has('subcategories') ? implode(',', $request->subcategories) : '',
             'description' => $request->description
         ]);
 
@@ -40,8 +47,14 @@ class FacilityManagementController extends Controller
     {
         $facility = Facility::findOrFail($id);
         $mainCategories = \Illuminate\Support\Facades\DB::table('main_category')->get();
+        $subcategoriesList = [
+            'Agricultural Land', 'Commercial Site', 'Development Land', 'Industrial Site', 
+            'Industrial Unit', 'Investment Property', 'Office Share', 'Office Space', 
+            'Restaurant / Bar / Hotel', 'Retail Unit', 'Serviced Office',
+            'House', 'Apartment', 'Studio', 'Flat'
+        ];
 
-        return view('admin.facility-management.edit', compact('facility', 'mainCategories'));
+        return view('admin.facility-management.edit', compact('facility', 'mainCategories', 'subcategoriesList'));
     }
 
     public function update(Request $request, $id)
@@ -51,6 +64,7 @@ class FacilityManagementController extends Controller
         $facility->update([
             'name' => $request->name,
             'category_ids' => $request->has('category_ids') ? implode(',', $request->category_ids) : '',
+            'subcategories' => $request->has('subcategories') ? implode(',', $request->subcategories) : '',
             'description' => $request->description
         ]);
 

@@ -911,96 +911,33 @@
                             
                             <!-- Facilities Section -->
                             @if(session::get('main_cat')==6 ||session::get('main_cat')==3)
-                            <div class="row" id="serviced_office">
+                            <div class="row" id="facilities_section">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-4">
                                     <h4 class="mt-2">Facilities</h4>
                                     <div style="display:flex;margin-top:15px;flex-wrap:wrap">
                                         <?php
-                                        $a=$b=$c=$d=$e=$f=$g=$h=$i=$j="";
-                                        $facilities=$property->facilities;
-                                        if(!empty($facilities)){      
-                                            if(in_array("None",$facilities))
-                                            {
-                                                $a="checked";
+                                        $facilities = $property->facilities;
+                                        if(!empty($facilities)) {      
+                                            if(!is_array($facilities)) {
+                                                $facilities = explode(',', $facilities);
                                             }
-                                            if(in_array("Alarm",$facilities))
-                                            {
-                                                $b="checked";
-                                            }
-                                            if(in_array("Parking",$facilities))
-                                            {
-                                                $c="checked";
-                                            }
-                                            if(in_array("Meeting Rooms",$facilities))
-                                            {
-                                                $d="checked";
-                                            }
-                                            if(in_array("Reception",$facilities))
-                                            {
-                                                $e="checked";
-                                            }
-                                            if(in_array("Toilets",$facilities))
-                                            {
-                                                $f="checked";
-                                            }
-                                            if(in_array("Phone lines",$facilities))
-                                            {
-                                                $g="checked";
-                                            }
-                                            if(in_array("Kitchen Area",$facilities))
-                                            {
-                                                $h="checked";
-                                            }
-                                            if(in_array("Cat 6 Data Cabling",$facilities))
-                                            {
-                                                $i="checked";
-                                            }
-                                            if(in_array("Cat 5 Cabling",$facilities))
-                                            {
-                                                $j="checked";
-                                            }
+                                        } else {
+                                            $facilities = [];
                                         }
+
+                                        $mainCatId = session::get('main_cat');
+                                        $allFacilities = \App\Models\Facility::all()->filter(function($f) use ($mainCatId) {
+                                            $cats = explode(',', $f->category_ids);
+                                            return in_array($mainCatId, $cats);
+                                        });
                                         ?>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_none" value="None" <?=$a?>>
-                                            <label class="form-check-label" for="facility_none">None</label>
+                                        
+                                        @foreach($allFacilities as $fac)
+                                        <div class="form-check me-3 mb-3 dynamic-facility" data-subcategories="{{ $fac->subcategories }}">
+                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_{{ $fac->id }}" value="{{ $fac->name }}" {{ in_array($fac->name, $facilities) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="facility_{{ $fac->id }}">{{ $fac->name }}</label>
                                         </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_alarm" value="Alarm" <?=$b?>>
-                                            <label class="form-check-label" for="facility_alarm">Alarm</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_parking" value="Parking" <?=$c?>>
-                                            <label class="form-check-label" for="facility_parking">Parking</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_meeting" value="Meeting Rooms" <?=$d?>>
-                                            <label class="form-check-label" for="facility_meeting">Meeting Rooms</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_reception" value="Reception" <?=$e?>>
-                                            <label class="form-check-label" for="facility_reception">Reception</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_toilets" value="Toilets" <?=$f?>>
-                                            <label class="form-check-label" for="facility_toilets">Toilets</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_phone" value="Phone lines" <?=$g?>>
-                                            <label class="form-check-label" for="facility_phone">Phone lines</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_kitchen" value="Kitchen Area" <?=$h?>>
-                                            <label class="form-check-label" for="facility_kitchen">Kitchen Area</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_cat6" value="Cat 6 Data Cabling" <?=$i?>>
-                                            <label class="form-check-label" for="facility_cat6">Cat 6 Data Cabling</label>
-                                        </div>
-                                        <div class="form-check me-3 mb-3">
-                                            <input type="checkbox" name="fa1[]" class="form-check-input larger" id="facility_cat5" value="Cat 5 Cabling" <?=$j?>>
-                                            <label class="form-check-label" for="facility_cat5">Cat 5 Cabling</label>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -1405,7 +1342,7 @@
         $("#floor").hide()
         $(".floor2").hide()
         $(".offshare").hide()
-        $("#serviced_office").hide();
+        // $("#facilities_section").hide(); // We keep it visible but filter children
         ImgUpload();
         myFunction();
     });
@@ -1433,13 +1370,32 @@
             } else {
                 $(".offshare").hide()
             }
-            
-            if(property_select=="Serviced Office") {
-                $("#serviced_office").show();
-            } else {
-                $("#serviced_office").hide();
-            }
             $("#floor").hide()
+        }
+
+        // Filter facilities
+        var anyVisible = false;
+        $(".dynamic-facility").each(function() {
+            var subcatsStr = $(this).attr("data-subcategories");
+            if (!subcatsStr) {
+                // If no subcategories assigned, assume it applies to all in this category
+                $(this).show();
+                anyVisible = true;
+            } else {
+                var subcats = subcatsStr.split(",");
+                if (subcats.indexOf(property_select) !== -1) {
+                    $(this).show();
+                    anyVisible = true;
+                } else {
+                    $(this).hide();
+                }
+            }
+        });
+
+        if (anyVisible) {
+            $("#facilities_section").show();
+        } else {
+            $("#facilities_section").hide();
         }
     }
     
