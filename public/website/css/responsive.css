@@ -1,0 +1,274 @@
+.bottom-right,
+.bottom-left {
+    bottom: 155px;
+}
+
+.site-mobile-menu .site-nav-wrap a {
+    color: #fff !important;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .bottom-right {
+        bottom:235px;
+    }
+
+    .bottom-left {
+        bottom: 5px;
+    }
+
+    form .col-lg-8 {
+        width: 55%;
+    }
+
+    center button {
+        padding: 7px !important;
+    }
+
+    #myForm {
+        padding-bottom: 10px;
+    }
+
+    #myForm .col-lg-8 {
+        width: 69% !important;
+    }
+
+    .site-mobile-menu .site-nav-wrap a {
+        color: #fff !important;
+        font-weight: 700;
+    }
+
+    .site-mobile-menu .site-nav-wrap .arrow-collapse:before {
+        color: #fff;
+        font-size: 22px;
+        top: 17px;
+    }
+
+    .site-mobile-menu-close>span:before,
+    .site-mobile-menu-close>span:after {
+        width: 3px;
+        height: 30px;
+        background: #fff;
+    }
+
+    li a button {
+        width: 100px;
+    }
+
+    .box-feature {
+        height: 90%;
+    }
+
+    .col-lg-4 .no-bullets {
+        padding: 0 !important;
+    }
+
+    .col-lg-4 .ml-4 {
+        justify-content: center;
+        margin: 0;
+    }
+
+    #images_enquiry .col-lg-6 {
+        width: 100%;
+    }
+
+    #description .col-lg-10 ul {
+        padding: 0 !important;
+        width: 100%;
+    }
+
+    .property-ad-img {
+        height: 275px !important;
+    }
+
+
+}
+
+@media only screen and (max-width: 576px) {
+    form .col-lg-8 {
+        width: 50%;
+    }
+
+    form .col-lg-2 button {
+        width: 127px !important;
+    }
+
+    .boxes {
+        margin: auto !important;
+    }
+
+    .propertyItems {
+        flex-direction: column;
+    }
+
+    .property-item {
+        height: auto;
+    }
+
+    .propertyItems img {
+        height: 300px;
+        width: 400px;
+        margin-bottom: 0;
+        z-index: 3;
+    }
+
+    .property-item .property-content {
+        margin: auto;
+        padding: 20px 0px 0px 12px;
+    }
+
+    .property-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .property-content p {
+        margin: 0;
+    }
+
+    .propertyItems h6 {
+        margin-top: 15px;
+    }
+
+    .property-content h6 {
+        padding: 0px 10px;
+    }
+
+    .hero .box {
+        width: 500px;
+        
+    }
+
+    .btnBox div {
+        width: 700px !important;
+        /* height: 30px !important; */
+    }
+
+    .propertyItems .property-content h6 {
+        padding: 6px 10px;
+    }
+
+    .section-4 .col-lg-5 h2 {
+        font-size: 24px;
+    }
+
+    .box-feature [class^="flaticon-"] {
+        font-size: 55px;
+    }
+
+    .box-feature h3,
+    .box-feature .h3 {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .site-footer .widget img {
+        max-width: 240px;
+    }
+
+    .site-footer .widget {
+        margin: 0;
+    }
+
+    .site-footer .row {
+        margin: 0 !important;
+    }
+
+    .site-nav .site-navigation a img {
+        width: 75%;
+    }
+
+    h4,
+    h5 {
+        font-size: 18px;
+    }
+
+    p,
+    h6,
+    button span {
+        font-size: 12px !important;
+    }
+
+    .bottom-right,
+    .bottom-left {
+        font-size: 30px;
+    }
+
+
+
+    center button {
+        width: 150px !important;
+        margin-right: 5px;
+    }
+
+    #description .desc_content {
+        margin-left: 1% !important;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .property-item {
+        width: 92%;
+    }
+
+    form .col-lg-2 button {
+        width: 105px !important;
+    }
+
+    .property-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .specs p {
+        font-size: 12px !important;
+    }
+
+    .property-content h6 {
+        padding: 0px 8px;
+        margin: 0;
+    }
+
+    .site-navigation .logo {
+        width: 70%;
+    }
+
+    #description .desc_content {
+        margin-left: 1% !important;
+    }
+
+    #description .desc_content ul {
+        padding: 2% !important;
+    }
+
+    .property-ad-img {
+        height: 240px !important;
+    }
+    .containerarrow center img{
+        height: 230px !important;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    form .col-lg-8 {
+        width: 45%;
+    }
+
+    #description .desc_content {
+        margin-left: 1% !important;
+    }
+
+    #description .desc_content ul {
+        padding: 2% !important;
+    }
+
+    .property-ad-img {
+        height: 230px !important;
+    }
+    
+    .containerarrow center img{
+        height: 230px !important;
+    }
+}

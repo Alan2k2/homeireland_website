@@ -1,0 +1,17 @@
+    .site-menu li a
+    {
+        /*color:black !important;*/
+    }
+        .site-menu li a:hover
+    {
+        /*color:#00A79D !important;*/
+    }
+    .site-nav
+    {
+        /*background:#D7DCDB;*/
+    }
+    .page_cat:link
+    {
+        color:red !important;
+        font:red !important;
+    }
